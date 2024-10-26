@@ -73,7 +73,7 @@ public class Transaction {
 
     private double validateAmount(double amount) {
         if (amount > 0) {
-            return new BigDecimal(amount).round(new MathContext(2)).doubleValue();
+            return Math.round(amount * 100.0)/100.0;
         } else {
             throw new IllegalAmountException("Amount has to be greater than 0!");
         }

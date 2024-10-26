@@ -1,7 +1,7 @@
 package com.bptn.planmyfinance.transactions;
 
 import com.bptn.planmyfinance.transaction.Transaction;
-import com.bptn.planmyfinance.transaction_file.TransactionFileLoader;
+import com.bptn.planmyfinance.transaction_file_processor.TransactionFileLoader;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -3,6 +3,7 @@ package com.bptn.planmyfinance;
 import com.bptn.planmyfinance.transaction.Transaction;
 import com.bptn.planmyfinance.transactions.Transactions;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
@@ -21,7 +22,7 @@ public class App {
             String transactionName = scanner.next();
             System.out.print("[C]redit or [D]ebit: ");
             String transactionTypeInput = scanner.next();
-            String transactionType = transactionTypeInput.equals("C")  || transactionTypeInput.equals("c")? "credit" : "debit";
+            String transactionType = transactionTypeInput.equals("C")  || transactionTypeInput.equals("c")? "credit" : transactionTypeInput.equals("D")  || transactionTypeInput.equals("d")? "debit" : "null";
             System.out.print("Total amount: $");
             double transactionAmount = scanner.nextDouble();
             System.out.print("Transaction date (dd-mm-yyyy): ");
@@ -29,9 +30,13 @@ public class App {
 
             Transaction newTransaction = new Transaction(transactionName, transactionType, transactionAmount, transactionDate);
             boolean transactionAdded = transactions.addTransaction(newTransaction);
-            System.out.println(transactionAdded? "Transaction successfully added!" : "Couldn't add transaction. Please try again!");
+            System.out.println(transactionAdded? "Transaction successfully added!: " + newTransaction.toString(): "Couldn't add transaction. Please try again!");
+        } catch (InputMismatchException e) {
+            System.out.println("Couldn't recognize your input. Please try again!");
+            scanner.nextLine();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
     }
 }

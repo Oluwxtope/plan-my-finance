@@ -1,6 +1,6 @@
 package com.bptn.planmyfinance;
 
-import com.bptn.planmyfinance.transaction_file.TransactionFileGenerator;
+import com.bptn.planmyfinance.transaction_file_processor.TransactionFileGenerator;
 import com.bptn.planmyfinance.transactions.Transactions;
 
 import java.util.Date;
@@ -25,7 +25,7 @@ public class Main {
 
              System.out.println("1. Add a transaction");
              System.out.println("2. View transactions");
-             System.out.println("3. Search for a transaction");
+             System.out.println("3. Search for transactions");
              System.out.println("4. Generate a report");
              System.out.println("5. Exit");
 
@@ -37,11 +37,17 @@ public class Main {
                  case 1:
                      app.addTransaction();
                      break;
+                 case 2:
+
+                 case 3:
+
                  case 4:
                      String reportFileName = scanner.next();
                      TransactionFileGenerator.saveTransactionsToFile(transactions, reportFileName+".csv");
+                     break;
                  case 5:
                      exitProgram = true;
+                     System.out.println("Thank you for planning with us!");
                      break;
              }
 
