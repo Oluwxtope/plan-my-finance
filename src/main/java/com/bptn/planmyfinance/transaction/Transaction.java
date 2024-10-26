@@ -2,6 +2,8 @@ package com.bptn.planmyfinance.transaction;
 
 import com.bptn.planmyfinance.exceptions.IllegalAmountException;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -9,10 +11,10 @@ import java.time.format.DateTimeParseException;
 public class Transaction {
     private String name;
     private TransactionType type;
-    private long amount;
+    private double amount;
     private LocalDate date;
 
-    public Transaction(String name, String type, long amount, String date) {
+    public Transaction(String name, String type, double amount, String date) {
         this.name = name;
         this.type = parseTransactionType(type);
         this.amount = validateAmount(amount);
@@ -31,7 +33,7 @@ public class Transaction {
         this.date = date;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = validateAmount(amount);
     }
 
@@ -47,7 +49,7 @@ public class Transaction {
         return type.getType();
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
@@ -69,9 +71,9 @@ public class Transaction {
         }
     }
 
-    private long validateAmount(long amount) {
+    private double validateAmount(double amount) {
         if (amount > 0) {
-            return amount;
+            return new BigDecimal(amount).round(new MathContext(2)).doubleValue();
         } else {
             throw new IllegalAmountException("Amount has to be greater than 0!");
         }
