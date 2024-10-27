@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Transactions {
-    private final List<Transaction> transactions;
+    private List<Transaction> transactions;
 
     public Transactions(String transactionFileName) {
         this.transactions = TransactionFile.loadTransactions(transactionFileName);
@@ -20,10 +20,23 @@ public class Transactions {
         return sortTransactionsByDate(transactions, "des");
     }
 
-    public boolean addTransaction(Transaction transaction) {
+    public boolean addTransaction(Transaction transaction, String transactionFileName) {
         transactions.add(transaction);
-        String transactionFilePath = "/Users/emmanuel/Desktop/plan-my-finance/transactions.txt";
-        return TransactionFile.writeTransactions(this, transactionFilePath);
+        setTransactions(this);
+        return TransactionFile.writeTransactions(this, transactionFileName);
+    }
+
+    private void setTransactions(Transactions transactions) {
+        this.transactions = sortTransactionsByDate(transactions.getTransactions(), "des");
+    }
+
+    public void setTransaction(int transactionIndex, Transaction newTransaction, String transactionFileName) {
+        Transaction oldTransaction = transactions.get(transactionIndex);
+        oldTransaction.setAmount(newTransaction.getAmount());
+        oldTransaction.setDate(newTransaction.getDate());
+        oldTransaction.setName(newTransaction.getName());
+        oldTransaction.setType(newTransaction.getType());
+        TransactionFile.writeTransactions(this, transactionFileName);
     }
 
     public List<Transaction> filterTransactionsByType(String transactionType) {
@@ -43,7 +56,7 @@ public class Transactions {
 
     @Override
     public String toString() {
-        return transactions.stream().map(Transaction::toString).collect(Collectors.joining("\n"));
+        return sortTransactionsByDate(transactions, "des").stream().map(Transaction::toString).collect(Collectors.joining("\n"));
     }
 
     private List<Transaction> sortTransactionsByDate(List<Transaction> listOfTransaction, String sortOrder) {

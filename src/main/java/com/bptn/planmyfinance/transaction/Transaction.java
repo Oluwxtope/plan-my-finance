@@ -23,10 +23,6 @@ public class Transaction {
         this.name = name;
     }
 
-    public void setDate(String date) {
-        this.date = convertStringToDateDDMMYYYY(date);
-    }
-
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -60,6 +56,18 @@ public class Transaction {
         return getName() + ", " + getType() + ", " + getAmount() + ", " + getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
+    @Override
+    public boolean equals(Object otherObject) {
+        if (otherObject == this) {
+            return true;
+        }
+        if (!(otherObject instanceof  Transaction)) {
+            return false;
+        }
+        Transaction otherTransaction = (Transaction) otherObject;
+        return this.getAmount() == otherTransaction.getAmount() && this.getDate() == otherTransaction.getDate() && this.getType().equals(otherTransaction.getType()) && this.getName().equals(otherTransaction.getName());
+    }
+
     public static LocalDate convertStringToDateDDMMYYYY(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
@@ -81,7 +89,7 @@ public class Transaction {
         try {
             return TransactionType.valueOf(type.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Transaction type has to be 'Debit' or 'Credit'!");
+            throw new RuntimeException("Transaction type has to be 'debit' or 'credit'!");
         }
     }
 

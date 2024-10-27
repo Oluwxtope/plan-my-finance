@@ -10,8 +10,6 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Long.parseLong;
-
 public class TransactionFile {
     public static List<Transaction> loadTransactions(String transactionFilePath) {
         List<Transaction> listOfTransactions = new ArrayList<>();
@@ -21,10 +19,11 @@ public class TransactionFile {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] arrayOfLineData = line.split(", "); // [name, type, amount, date]
-                Transaction transaction = new Transaction(arrayOfLineData[0], arrayOfLineData[1], parseLong(arrayOfLineData[2]), arrayOfLineData[3]);
+                Transaction transaction = new Transaction(arrayOfLineData[0], arrayOfLineData[1], Double.parseDouble(arrayOfLineData[2]), arrayOfLineData[3]);
                 listOfTransactions.add(transaction);
             }
         } catch (Exception e) {
+            System.out.println("Error loading transaction. Please try again!");
             System.out.println(e.getMessage());
         }
         return listOfTransactions;
@@ -34,16 +33,6 @@ public class TransactionFile {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(generatedFilePath))) {
             writer.write("Name, Type, Amount($), Date(dd-mm-yyyy)\n");
             writer.write(transactions.toString());
-            System.out.println("You can find your financial report in " + generatedFilePath);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    public static boolean writeTransaction(Transaction transaction, String generatedFilePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(generatedFilePath))) {
-            writer.write(transaction.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
