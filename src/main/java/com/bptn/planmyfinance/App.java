@@ -37,6 +37,35 @@ public class App {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    public void viewTransactions() {
+        try {
+            System.out.println("Which transactions would you like to view?");
+            System.out.println("[C]redit");
+            System.out.println("[D]ebit");
+            System.out.println("[A]ll");
+            String transactionTypeToViewInput = scanner.nextLine();
+            String transactionTypeToView = switch (transactionTypeToViewInput) {
+                case "A", "a" -> "";
+                case "C", "c" -> "credit";
+                case "D", "d" -> "debit";
+                default -> throw new RuntimeException("Transaction type not recognized!");
+            };
+
+            System.out.println("In what order by date?");
+            System.out.println("[A]scending");
+            System.out.println("[D]escending");
+            String transactionDisplayOrderInput = scanner.nextLine();
+            String transactionDisplayOrder = switch (transactionDisplayOrderInput) {
+                case "A", "a" -> "asc";
+                case "D", "d" -> "des";
+                default -> throw new RuntimeException("Order not recognized!");
+            };
+
+            transactions.viewTransactionsByTypeAndOrder(transactionTypeToView, transactionDisplayOrder);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

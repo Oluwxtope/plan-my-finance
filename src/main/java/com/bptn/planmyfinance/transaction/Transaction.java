@@ -1,9 +1,7 @@
 package com.bptn.planmyfinance.transaction;
 
-import com.bptn.planmyfinance.exceptions.IllegalAmountException;
+import com.bptn.planmyfinance.transaction.exceptions.IllegalAmountException;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -18,7 +16,7 @@ public class Transaction {
         this.name = name;
         this.type = parseTransactionType(type);
         this.amount = validateAmount(amount);
-        this.date = convertStringToDate(date);
+        this.date = convertStringToDateDDMMYYYY(date);
     }
 
     public void setName(String name) {
@@ -26,7 +24,7 @@ public class Transaction {
     }
 
     public void setDate(String date) {
-        this.date = convertStringToDate(date);
+        this.date = convertStringToDateDDMMYYYY(date);
     }
 
     public void setDate(LocalDate date) {
@@ -59,10 +57,10 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return getName() + "," + getType() + "," + getAmount() + "," + getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        return getName() + ", " + getType() + ", " + getAmount() + ", " + getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
-    private LocalDate convertStringToDate(String date) {
+    public static LocalDate convertStringToDateDDMMYYYY(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
             return LocalDate.parse(date, formatter);
@@ -79,11 +77,12 @@ public class Transaction {
         }
     }
 
-    private TransactionType parseTransactionType(String type) {
+    public static TransactionType parseTransactionType(String type) {
         try {
             return TransactionType.valueOf(type.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Transaction type has to be 'Debit' or 'Credit'!");
         }
     }
+
 }

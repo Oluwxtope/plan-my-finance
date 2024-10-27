@@ -15,7 +15,7 @@ public class Main {
         Transactions transactions = new Transactions(transactionFileName);
 
          Scanner scanner = new Scanner(System.in);
-         int choice = -1;
+         String choice = "";
         boolean exitProgram = false;
          do {
              showAppLogo();
@@ -23,34 +23,36 @@ public class Main {
              System.out.println(date);
              System.out.println();
 
-             System.out.println("1. Add a transaction");
-             System.out.println("2. View transactions");
-             System.out.println("3. Search for transactions");
-             System.out.println("4. Generate a report");
-             System.out.println("5. Exit");
+             System.out.println("[A]dd a transaction");
+             System.out.println("[V]iew transactions");
+             System.out.println("[S]earch for transactions");
+             System.out.println("[G]enerate a report");
+             System.out.println("[E]xit");
 
-             choice = scanner.nextInt();
+             choice = scanner.nextLine();
 
              App app = new App(transactions, scanner);
 
              switch(choice) {
-                 case 1:
+                 case "A", "a":
                      app.addTransaction();
                      break;
-                 case 2:
-
-                 case 3:
-
-                 case 4:
+                 case "V", "v":
+                     app.viewTransactions();
+                     break;
+                 case "S", "s":
+                    break;
+                 case "G", "g":
                      String reportFileName = scanner.next();
                      TransactionFileGenerator.saveTransactionsToFile(transactions, reportFileName+".csv");
                      break;
-                 case 5:
+                 case "E", "e":
                      exitProgram = true;
                      System.out.println("Thank you for planning with us!");
                      break;
+                 default:
+                     System.out.println("Invalid input. Please try again!");
              }
-
          } while (!exitProgram);
          scanner.close();
     }

@@ -1,3 +1,5 @@
-name,type,amount,date(dd-mm-yyyy)
-Salary,Credit,2000,20-10-2024
-Rent,Debit,500,01-11-2024
+name, type, amount, date(dd-mm-yyyy)
+Salary, Credit, 2000, 20-10-2024
+Rent, Debit, 500, 01-11-2024
+Tuition, Debit, 1000, 10-08-2024
+Dividends, Credit, 500, 21-09-2024

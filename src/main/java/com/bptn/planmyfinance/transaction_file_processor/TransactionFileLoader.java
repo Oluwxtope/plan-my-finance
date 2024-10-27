@@ -18,7 +18,7 @@ public class TransactionFileLoader {
             bufferedReader.readLine();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] arrayOfLineData = line.split(","); // [name, type, amount, date]
+                String[] arrayOfLineData = line.split(", "); // [name, type, amount, date]
                 Transaction transaction = new Transaction(arrayOfLineData[0], arrayOfLineData[1], parseLong(arrayOfLineData[2]), arrayOfLineData[3]);
                 listOfTransactions.add(transaction);
             }
