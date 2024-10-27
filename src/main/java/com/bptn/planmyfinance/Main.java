@@ -1,6 +1,6 @@
 package com.bptn.planmyfinance;
 
-import com.bptn.planmyfinance.transaction_file_processor.TransactionFileGenerator;
+import com.bptn.planmyfinance.transaction_file_processor.TransactionFile;
 import com.bptn.planmyfinance.transactions.Transactions;
 
 import java.util.Date;
@@ -11,7 +11,7 @@ public class Main {
         String userName = "Emmanuel";
          Date date = new Date();
 
-         String transactionFileName = "transactions.csv";
+         String transactionFileName = "transactions.txt";
         Transactions transactions = new Transactions(transactionFileName);
 
          Scanner scanner = new Scanner(System.in);
@@ -44,14 +44,12 @@ public class Main {
                     break;
                  case "G", "g":
                      String reportFileName = scanner.next();
-                     TransactionFileGenerator.saveTransactionsToFile(transactions, reportFileName+".csv");
+                     TransactionFile.writeTransactions(transactions, reportFileName+".txt");
                      break;
                  case "E", "e":
                      exitProgram = true;
                      System.out.println("Thank you for planning with us!");
                      break;
-                 default:
-                     System.out.println("Invalid input. Please try again!");
              }
          } while (!exitProgram);
          scanner.close();

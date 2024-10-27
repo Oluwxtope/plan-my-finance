@@ -1,20 +1,19 @@
 package com.bptn.planmyfinance.transactions;
 
 import com.bptn.planmyfinance.transaction.Transaction;
-import com.bptn.planmyfinance.transaction_file_processor.TransactionFileLoader;
+import com.bptn.planmyfinance.transaction_file_processor.TransactionFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Transactions {
-    private List<Transaction> transactions;
+    private final List<Transaction> transactions;
 
     public Transactions(String transactionFileName) {
-        this.transactions = TransactionFileLoader.loadTransactionFile(transactionFileName);
+        this.transactions = TransactionFile.loadTransactions(transactionFileName);
     }
 
     public List<Transaction> getTransactions() {
@@ -22,7 +21,9 @@ public class Transactions {
     }
 
     public boolean addTransaction(Transaction transaction) {
-        return transactions.add(transaction);
+        transactions.add(transaction);
+        String transactionFilePath = "/Users/emmanuel/Desktop/plan-my-finance/transactions.txt";
+        return TransactionFile.writeTransactions(this, transactionFilePath);
     }
 
     public List<Transaction> filterTransactionsByType(String transactionType) {
@@ -76,7 +77,7 @@ public class Transactions {
     }
 
     public void viewTransactionsByTypeAndOrder(String transactionType, String sortOrder) {
-        System.out.println("Name, Type, Amount, Date (dd-mm-yyyy)");
+        System.out.println("Name, Type, Amount ($), Date (dd-mm-yyyy)");
         List<Transaction> filteredTransactionsSorted = sortTransactionsByDate(filterTransactionsByType(transactionType), sortOrder);
         filteredTransactionsSorted.forEach(System.out::println);
     }
