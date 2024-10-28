@@ -1,5 +1,6 @@
 package com.bptn.planmyfinance.transaction;
 
+import com.bptn.planmyfinance.date.DateConversion;
 import com.bptn.planmyfinance.transaction.exceptions.IllegalAmountException;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class Transaction {
         this.name = name;
         this.type = parseTransactionType(type);
         this.amount = validateAmount(amount);
-        this.date = convertStringToDateDDMMYYYY(date);
+        this.date = DateConversion.convertStringToDateDDMMYYYY(date);
     }
 
     public void setName(String name) {
@@ -66,15 +67,6 @@ public class Transaction {
         }
         Transaction otherTransaction = (Transaction) otherObject;
         return this.getAmount() == otherTransaction.getAmount() && this.getDate() == otherTransaction.getDate() && this.getType().equals(otherTransaction.getType()) && this.getName().equals(otherTransaction.getName());
-    }
-
-    public static LocalDate convertStringToDateDDMMYYYY(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        try {
-            return LocalDate.parse(date, formatter);
-        } catch (DateTimeParseException e) {
-            throw new RuntimeException("Wrong date format!");
-        }
     }
 
     private double validateAmount(double amount) {

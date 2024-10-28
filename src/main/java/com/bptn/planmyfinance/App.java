@@ -58,18 +58,21 @@ public class App implements Dashboard {
     public void handleAddTransaction() {
         try {
             System.out.print("Name of transaction: ");
-            String transactionName = scanner.next();
+            String transactionName = scanner.nextLine();
             System.out.print("[C]redit or [D]ebit: ");
             String transactionTypeInput = scanner.next();
+            scanner.nextLine();
             String transactionType = transactionTypeInput.equals("C")  || transactionTypeInput.equals("c")? "credit" : transactionTypeInput.equals("D")  || transactionTypeInput.equals("d")? "debit" : "null";
             System.out.print("Total amount: $");
             double transactionAmount = scanner.nextDouble();
+            scanner.nextLine();
             System.out.print("Transaction date (dd-mm-yyyy): ");
             String transactionDate = scanner.next();
+            scanner.nextLine();
 
             Transaction newTransaction = new Transaction(transactionName, transactionType, transactionAmount, transactionDate);
             boolean transactionAdded = transactions.addTransaction(newTransaction, transactionFileName);
-            System.out.println(transactionAdded? "Transaction successfully added!: " + newTransaction: "Couldn't add transaction. Please try again!");
+            System.out.println(transactionAdded? "Transaction successfully added!" : "Couldn't add transaction. Please try again!");
         } catch (InputMismatchException e) {
             System.out.println("Couldn't recognize your input. Please try again!");
             scanner.nextLine();

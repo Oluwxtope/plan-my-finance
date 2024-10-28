@@ -33,9 +33,10 @@ public class TransactionFile {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(generatedFilePath))) {
             writer.write("Name, Type, Amount($), Date(dd-mm-yyyy)\n");
             writer.write(transactions.toString());
+            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
-        return false;
     }
 }
