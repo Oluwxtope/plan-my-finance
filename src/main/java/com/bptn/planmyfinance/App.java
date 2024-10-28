@@ -5,18 +5,22 @@ import com.bptn.planmyfinance.transaction.Transaction;
 import com.bptn.planmyfinance.transactions.Transactions;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App implements Dashboard {
 
-    private final String transactionFileName = "transactions.txt";
     private final Transactions transactions;
     private final Scanner scanner;
+    private final HashMap<String, String> config = new HashMap<>();
 
-    public App() {
-        this.transactions = new Transactions(transactionFileName);
+    public App(String userName, String transactionFileName) {
+
         this.scanner = new Scanner(System.in);
+        this.config.put("username", userName);
+        this.config.put("transactionFileName", transactionFileName);
+        this.transactions = new Transactions(transactionFileName);
     }
 
     public void run() {
@@ -70,7 +74,7 @@ public class App implements Dashboard {
             scanner.nextLine();
 
             Transaction newTransaction = new Transaction(transactionName, transactionType, transactionAmount, transactionDate);
-            boolean transactionAdded = transactions.addTransaction(newTransaction, transactionFileName);
+            boolean transactionAdded = transactions.addTransaction(newTransaction, config.get("transactionFileName"));
             System.out.println(transactionAdded ? "Transaction successfully added!" : "Couldn't add transaction. Please try again!");
         } catch (InputMismatchException e) {
             System.out.println("Couldn't recognize your input. Please try again!");
@@ -134,7 +138,7 @@ public class App implements Dashboard {
                     String transactionDate = scanner.nextLine();
 
                     Transaction newTransaction = new Transaction(transactionName, transactionType, transactionAmount, transactionDate);
-                    transactions.setTransaction(chooseTransactionIndex - 1, newTransaction, transactionFileName);
+                    transactions.setTransaction(chooseTransactionIndex - 1, newTransaction, config.get("transactionFileName"));
                     System.out.println("Transaction successfully edited!");
                 } catch (InputMismatchException e) {
                     System.out.println("Couldn't recognize your input. Please try again!");
