@@ -19,14 +19,14 @@ public class Transactions {
         return sortTransactionsByDate(transactions, "des");
     }
 
+    private void setTransactions(Transactions transactions) {
+        this.transactions = sortTransactionsByDate(transactions.getTransactions(), "des");
+    }
+
     public boolean addTransaction(Transaction transaction, String transactionFileName) {
         transactions.add(transaction);
         setTransactions(this);
         return TransactionFile.writeTransactions(this, transactionFileName);
-    }
-
-    private void setTransactions(Transactions transactions) {
-        this.transactions = sortTransactionsByDate(transactions.getTransactions(), "des");
     }
 
     public void setTransaction(int transactionIndex, Transaction newTransaction, String transactionFileName) {
@@ -39,7 +39,7 @@ public class Transactions {
     }
 
     public List<Transaction> filterTransactionsByType(String transactionType) {
-        return transactionType.isEmpty() ? this.getTransactions() : transactions.stream().filter(transaction -> transaction.getType().equals(transactionType) ).toList();
+        return transactionType.isEmpty() ? this.getTransactions() : transactions.stream().filter(transaction -> transaction.getType().equals(transactionType)).toList();
     }
 
     @Override
@@ -49,11 +49,14 @@ public class Transactions {
 
     private List<Transaction> sortTransactionsByDate(List<Transaction> listOfTransaction, String sortOrder) {
         List<Transaction> copyOfTransactionsToSort = new ArrayList<>(listOfTransaction);
-        if (sortOrder.equals("asc")) {
-            copyOfTransactionsToSort.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getAmount).thenComparing(Transaction::getName));
-        } else {
-            copyOfTransactionsToSort.sort(Comparator.comparing(Transaction::getDate).thenComparing(Transaction::getAmount).thenComparing(Transaction::getName).reversed());
+        Comparator<Transaction> comparator = Comparator
+                .comparing(Transaction::getDate)
+                .thenComparing(Transaction::getAmount)  // First tie-breaker
+                .thenComparing(Transaction::getName);
+        if (sortOrder.equals("desc")) {
+            comparator = comparator.reversed();
         }
+        copyOfTransactionsToSort.sort(comparator);
         return copyOfTransactionsToSort;
     }
 

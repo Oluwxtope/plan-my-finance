@@ -62,7 +62,7 @@ public class App implements Dashboard {
             System.out.print("[C]redit or [D]ebit: ");
             String transactionTypeInput = scanner.next();
             scanner.nextLine();
-            String transactionType = transactionTypeInput.equals("C")  || transactionTypeInput.equals("c")? "credit" : transactionTypeInput.equals("D")  || transactionTypeInput.equals("d")? "debit" : "null";
+            String transactionType = transactionTypeInput.equals("C") || transactionTypeInput.equals("c") ? "credit" : transactionTypeInput.equals("D") || transactionTypeInput.equals("d") ? "debit" : "null";
             System.out.print("Total amount: $");
             double transactionAmount = scanner.nextDouble();
             scanner.nextLine();
@@ -72,7 +72,7 @@ public class App implements Dashboard {
 
             Transaction newTransaction = new Transaction(transactionName, transactionType, transactionAmount, transactionDate);
             boolean transactionAdded = transactions.addTransaction(newTransaction, transactionFileName);
-            System.out.println(transactionAdded? "Transaction successfully added!" : "Couldn't add transaction. Please try again!");
+            System.out.println(transactionAdded ? "Transaction successfully added!" : "Couldn't add transaction. Please try again!");
         } catch (InputMismatchException e) {
             System.out.println("Couldn't recognize your input. Please try again!");
             scanner.nextLine();
@@ -127,7 +127,7 @@ public class App implements Dashboard {
                     String transactionName = scanner.next();
                     System.out.print("[C]redit or [D]ebit: ");
                     String transactionTypeInput = scanner.next();
-                    String transactionType = transactionTypeInput.equals("C")  || transactionTypeInput.equals("c")? "credit" : transactionTypeInput.equals("D")  || transactionTypeInput.equals("d")? "debit" : "null";
+                    String transactionType = transactionTypeInput.equals("C") || transactionTypeInput.equals("c") ? "credit" : transactionTypeInput.equals("D") || transactionTypeInput.equals("d") ? "debit" : "null";
                     System.out.print("Total amount: $");
                     double transactionAmount = scanner.nextDouble();
                     scanner.nextLine();
@@ -151,6 +151,7 @@ public class App implements Dashboard {
         }
 
     }
+
     @Override
     public void showDashboard() {
         showAppLogo();

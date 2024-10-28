@@ -5,7 +5,6 @@ import com.bptn.planmyfinance.transaction.exceptions.IllegalAmountException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class Transaction {
     private String name;
@@ -20,36 +19,44 @@ public class Transaction {
         this.date = DateConversion.convertStringToDateDDMMYYYY(date);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = validateAmount(amount);
-    }
-
-    public void setType(String type) {
-        this.type = parseTransactionType(type);
+    public static TransactionType parseTransactionType(String type) {
+        try {
+            return TransactionType.valueOf(type.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Transaction type has to be 'debit' or 'credit'!");
+        }
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getType() {
         return type.getType();
+    }
+
+    public void setType(String type) {
+        this.type = parseTransactionType(type);
     }
 
     public double getAmount() {
         return amount;
     }
 
+    public void setAmount(double amount) {
+        this.amount = validateAmount(amount);
+    }
+
     public LocalDate getDate() {
         return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
@@ -62,26 +69,17 @@ public class Transaction {
         if (otherObject == this) {
             return true;
         }
-        if (!(otherObject instanceof  Transaction)) {
+        if (!(otherObject instanceof Transaction otherTransaction)) {
             return false;
         }
-        Transaction otherTransaction = (Transaction) otherObject;
         return this.getAmount() == otherTransaction.getAmount() && this.getDate() == otherTransaction.getDate() && this.getType().equals(otherTransaction.getType()) && this.getName().equals(otherTransaction.getName());
     }
 
     private double validateAmount(double amount) {
         if (amount > 0) {
-            return Math.round(amount * 100.0)/100.0;
+            return Math.round(amount * 100.0) / 100.0;
         } else {
             throw new IllegalAmountException("Amount has to be greater than 0!");
-        }
-    }
-
-    public static TransactionType parseTransactionType(String type) {
-        try {
-            return TransactionType.valueOf(type.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Transaction type has to be 'debit' or 'credit'!");
         }
     }
 
