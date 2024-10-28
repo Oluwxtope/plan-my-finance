@@ -105,7 +105,7 @@ public class App implements Dashboard {
             String transactionDisplayOrder = switch (transactionDisplayOrderInput) {
                 case "A", "a" -> "asc";
                 case "D", "d" -> "des";
-                default -> throw new RuntimeException("Order not recognized!");
+                default -> transactionDisplayOrderInput;
             };
             System.out.println();
             transactions.printTransactionsByTypeAndOrder(transactionTypeToView, transactionDisplayOrder);
@@ -133,7 +133,7 @@ public class App implements Dashboard {
                     String transactionName = scanner.next();
                     System.out.print("[C]redit or [D]ebit: ");
                     String transactionTypeInput = scanner.next();
-                    String transactionType = transactionTypeInput.equals("C") || transactionTypeInput.equals("c") ? "credit" : transactionTypeInput.equals("D") || transactionTypeInput.equals("d") ? "debit" : "null";
+                    String transactionType = transactionTypeInput.equals("C") || transactionTypeInput.equals("c") ? "credit" : transactionTypeInput.equals("D") || transactionTypeInput.equals("d") ? "debit" : transactionTypeInput;
                     System.out.print("Total amount: $");
                     double transactionAmount = scanner.nextDouble();
                     scanner.nextLine();
