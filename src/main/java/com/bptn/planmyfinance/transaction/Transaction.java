@@ -64,17 +64,6 @@ public class Transaction {
         return getName() + ", " + getType() + ", " + getAmount() + ", " + getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
-    @Override
-    public boolean equals(Object otherObject) {
-        if (otherObject == this) {
-            return true;
-        }
-        if (!(otherObject instanceof Transaction otherTransaction)) {
-            return false;
-        }
-        return this.getAmount() == otherTransaction.getAmount() && this.getDate() == otherTransaction.getDate() && this.getType().equals(otherTransaction.getType()) && this.getName().equals(otherTransaction.getName());
-    }
-
     private double validateAmount(double amount) {
         if (amount > 0) {
             return Math.round(amount * 100.0) / 100.0;

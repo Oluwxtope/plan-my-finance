@@ -108,7 +108,7 @@ public class App implements Dashboard {
                 default -> throw new RuntimeException("Order not recognized!");
             };
             System.out.println();
-            transactions.viewTransactionsByTypeAndOrder(transactionTypeToView, transactionDisplayOrder);
+            transactions.printTransactionsByTypeAndOrder(transactionTypeToView, transactionDisplayOrder);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

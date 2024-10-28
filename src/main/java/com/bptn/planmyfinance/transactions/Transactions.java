@@ -60,7 +60,7 @@ public class Transactions {
         return copyOfTransactionsToSort;
     }
 
-    public void viewTransactionsByTypeAndOrder(String transactionType, String sortOrder) {
+    public void printTransactionsByTypeAndOrder(String transactionType, String sortOrder) {
         System.out.println("Name, Type, Amount ($), Date (dd-mm-yyyy)");
         List<Transaction> filteredTransactionsSorted = sortTransactions(filterTransactionsByType(transactionType), sortOrder);
         filteredTransactionsSorted.forEach(System.out::println);
