@@ -2,10 +2,8 @@ package com.bptn.planmyfinance;
 
 import com.bptn.planmyfinance.dashboard.Dashboard;
 import com.bptn.planmyfinance.transaction.Transaction;
-import com.bptn.planmyfinance.transaction_file_processor.TransactionFile;
 import com.bptn.planmyfinance.transactions.Transactions;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -47,10 +45,6 @@ public class App implements Dashboard {
                     break;
                 case "E", "e":
                     handleEditTransaction();
-                    break;
-                case "G", "g":
-                    String reportFileName = scanner.next();
-                    TransactionFile.writeTransactions(transactions, reportFileName + ".txt");
                     break;
                 case "Q", "q":
                     exitProgram = true;
