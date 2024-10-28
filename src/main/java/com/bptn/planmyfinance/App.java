@@ -31,7 +31,6 @@ public class App implements Dashboard {
             System.out.println("[A]dd a transaction");
             System.out.println("[V]iew transactions");
             System.out.println("[E]dit a transaction");
-            System.out.println("[G]enerate a report");
             System.out.println("[Q]uit");
 
             String choice = scanner.nextLine();

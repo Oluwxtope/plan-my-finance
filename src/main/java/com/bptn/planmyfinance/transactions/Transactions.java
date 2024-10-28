@@ -16,11 +16,11 @@ public class Transactions {
     }
 
     public List<Transaction> getTransactions() {
-        return sortTransactionsByDate(transactions, "des");
+        return sortTransactions(transactions, "des");
     }
 
     private void setTransactions(Transactions transactions) {
-        this.transactions = sortTransactionsByDate(transactions.getTransactions(), "des");
+        this.transactions = sortTransactions(transactions.getTransactions(), "des");
     }
 
     public boolean addTransaction(Transaction transaction, String transactionFileName) {
@@ -44,16 +44,16 @@ public class Transactions {
 
     @Override
     public String toString() {
-        return sortTransactionsByDate(transactions, "des").stream().map(Transaction::toString).collect(Collectors.joining("\n"));
+        return sortTransactions(transactions, "des").stream().map(Transaction::toString).collect(Collectors.joining("\n"));
     }
 
-    private List<Transaction> sortTransactionsByDate(List<Transaction> listOfTransaction, String sortOrder) {
+    private List<Transaction> sortTransactions(List<Transaction> listOfTransaction, String sortOrder) {
         List<Transaction> copyOfTransactionsToSort = new ArrayList<>(listOfTransaction);
         Comparator<Transaction> comparator = Comparator
                 .comparing(Transaction::getDate)
-                .thenComparing(Transaction::getAmount)  // First tie-breaker
+                .thenComparing(Transaction::getAmount)
                 .thenComparing(Transaction::getName);
-        if (sortOrder.equals("desc")) {
+        if (sortOrder.equals("des")) {
             comparator = comparator.reversed();
         }
         copyOfTransactionsToSort.sort(comparator);
@@ -62,7 +62,7 @@ public class Transactions {
 
     public void viewTransactionsByTypeAndOrder(String transactionType, String sortOrder) {
         System.out.println("Name, Type, Amount ($), Date (dd-mm-yyyy)");
-        List<Transaction> filteredTransactionsSorted = sortTransactionsByDate(filterTransactionsByType(transactionType), sortOrder);
+        List<Transaction> filteredTransactionsSorted = sortTransactions(filterTransactionsByType(transactionType), sortOrder);
         filteredTransactionsSorted.forEach(System.out::println);
     }
 }
