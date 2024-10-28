@@ -65,4 +65,10 @@ public class Transactions {
         List<Transaction> filteredTransactionsSorted = sortTransactions(filterTransactionsByType(transactionType), sortOrder);
         filteredTransactionsSorted.forEach(System.out::println);
     }
+
+    public double sumTransactions() {
+        return transactions.stream()
+                .mapToDouble(transaction -> transaction.getType().equals("credit") ? transaction.getAmount() : -transaction.getAmount())
+                .sum();
+    }
 }

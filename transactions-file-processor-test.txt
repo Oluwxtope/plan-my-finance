@@ -1,0 +1,2 @@
+Name, Type, Amount($), Date(dd-mm-yyyy)
+Rent, debit, 500.0, 01-11-2024

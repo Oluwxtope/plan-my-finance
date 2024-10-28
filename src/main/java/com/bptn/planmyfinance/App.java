@@ -109,6 +109,9 @@ public class App implements Dashboard {
             };
             System.out.println();
             transactions.printTransactionsByTypeAndOrder(transactionTypeToView, transactionDisplayOrder);
+            if (transactionTypeToView.isEmpty()) {
+                System.out.println("Total: $" + transactions.sumTransactions());
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
