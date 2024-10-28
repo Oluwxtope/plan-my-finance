@@ -57,6 +57,7 @@ public class App implements Dashboard {
                     System.out.println("Thank you for planning with us!");
                     break;
             }
+            System.out.println();
         } while (!exitProgram);
     }
 
@@ -106,7 +107,7 @@ public class App implements Dashboard {
                 case "D", "d" -> "des";
                 default -> throw new RuntimeException("Order not recognized!");
             };
-
+            System.out.println();
             transactions.viewTransactionsByTypeAndOrder(transactionTypeToView, transactionDisplayOrder);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -122,6 +123,7 @@ public class App implements Dashboard {
         System.out.println("Which transaction would you like to edit?");
         if (scanner.hasNextInt()) {
             int chooseTransactionIndex = scanner.nextInt();
+            scanner.nextLine();
             if (chooseTransactionIndex >= 1 && chooseTransactionIndex <= transactionsSize) {
                 try {
                     System.out.print("Name of transaction: ");
@@ -131,8 +133,9 @@ public class App implements Dashboard {
                     String transactionType = transactionTypeInput.equals("C")  || transactionTypeInput.equals("c")? "credit" : transactionTypeInput.equals("D")  || transactionTypeInput.equals("d")? "debit" : "null";
                     System.out.print("Total amount: $");
                     double transactionAmount = scanner.nextDouble();
+                    scanner.nextLine();
                     System.out.print("Transaction date (dd-mm-yyyy): ");
-                    String transactionDate = scanner.next();
+                    String transactionDate = scanner.nextLine();
 
                     Transaction newTransaction = new Transaction(transactionName, transactionType, transactionAmount, transactionDate);
                     transactions.setTransaction(chooseTransactionIndex - 1, newTransaction, transactionFileName);
@@ -161,7 +164,7 @@ public class App implements Dashboard {
 
     @Override
     public void showAppLogo() {
-        System.out.println("\n" +
+        System.out.println("\u001B[32m" + "\n" +
                 "  ____  _               __  __         _____ _                            \n" +
                 " |  _ \\| | __ _ _ __   |  \\/  |_   _  |  ___(_)_ __   __ _ _ __   ___ ___ \n" +
                 " | |_) | |/ _` | '_ \\  | |\\/| | | | | | |_  | | '_ \\ / _` | '_ \\ / __/ _ \\\n" +
@@ -173,12 +176,12 @@ public class App implements Dashboard {
     @Override
     public void greetUser() {
         String userName = "Emmanuel";
-        System.out.println("Welcome, " + userName + "!");
+        System.out.println("\u001B[33m" + "Welcome, " + userName + "!");
     }
 
     @Override
     public void showCurrentDateTime() {
         LocalDateTime dateTime = LocalDateTime.now();
-        System.out.println(dateTime);
+        System.out.println("\u001B[33m" + dateTime);
     }
 }
