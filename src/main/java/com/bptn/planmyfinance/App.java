@@ -1,13 +1,16 @@
 package com.bptn.planmyfinance;
 
+import com.bptn.planmyfinance.dashboard.Dashboard;
 import com.bptn.planmyfinance.transaction.Transaction;
 import com.bptn.planmyfinance.transaction_file_processor.TransactionFile;
 import com.bptn.planmyfinance.transactions.Transactions;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class App {
+public class App implements Dashboard {
 
     private final String transactionFileName = "transactions.txt";
     private final Transactions transactions;
@@ -23,11 +26,9 @@ public class App {
     }
 
     public void showMainMenu() {
+        showDashboard();
         boolean exitProgram = false;
         do {
-            String userName = "Emmanuel";
-            System.out.println("Welcome, " + userName + "!");
-            System.out.println();
 
             System.out.println("[A]dd a transaction");
             System.out.println("[V]iew transactions");
@@ -150,6 +151,34 @@ public class App {
         }
 
     }
+    @Override
+    public void showDashboard() {
+        showAppLogo();
+        greetUser();
+        showCurrentDateTime();
+        System.out.println();
+    }
 
+    @Override
+    public void showAppLogo() {
+        System.out.println("\n" +
+                "  ____  _               __  __         _____ _                            \n" +
+                " |  _ \\| | __ _ _ __   |  \\/  |_   _  |  ___(_)_ __   __ _ _ __   ___ ___ \n" +
+                " | |_) | |/ _` | '_ \\  | |\\/| | | | | | |_  | | '_ \\ / _` | '_ \\ / __/ _ \\\n" +
+                " |  __/| | (_| | | | | | |  | | |_| | |  _| | | | | | (_| | | | | (_|  __/\n" +
+                " |_|   |_|\\__,_|_| |_| |_|  |_|\\__, | |_|   |_|_| |_|\\__,_|_| |_|\\___\\___|\n" +
+                "                               |___/                                      \n");
+    }
 
+    @Override
+    public void greetUser() {
+        String userName = "Emmanuel";
+        System.out.println("Welcome, " + userName + "!");
+    }
+
+    @Override
+    public void showCurrentDateTime() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        System.out.println(dateTime);
+    }
 }
